@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Account</title>
+</head>
+<body>
+<form th:action="@{/admin/account/add}" method="post" th:object="${userModel}">
+    <input type="text" name="username" class="form-control" placeholder="Username" required>
+    <input type="password" name="password" class="form-control" placeholder="Password" required>
+    <input type="text" name="name" class="form-control" placeholder="Name" required>
+    <button type="submit">Add Account</button>
+</form>
+</body>
+</html>
