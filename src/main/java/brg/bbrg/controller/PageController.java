@@ -11,7 +11,7 @@ public class PageController {
 
     @RequestMapping("/")
     public String home() {
-        return "0-template-admin";
+        return "home";
     }
 
     @RequestMapping("/login")
@@ -19,7 +19,7 @@ public class PageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             /* The user is logged in :) */
-            return "redirect:/";
+            return "redirect:/admin";
         }
         return "login";
     }

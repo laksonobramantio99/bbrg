@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/account")
 public class AdminAccountController {
 
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private RoleService roleService;
+
+    @GetMapping("")
+    public String manageAccount() {
+        return "account-manage";
+    }
 
     @GetMapping(value = "/add")
     public String addUserForm(Model model) {
