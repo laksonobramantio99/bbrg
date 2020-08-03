@@ -11,7 +11,7 @@ public class PageController {
 
     @RequestMapping("/")
     public String home() {
-        return "index";
+        return "0-template-admin";
     }
 
     @RequestMapping("/login")
