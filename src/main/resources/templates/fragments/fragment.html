@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="head-items">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  W3 CSS  -->
+    <link rel="stylesheet" th:href="@{/vendor/w3/w3.css}">
+    <!--  Bootstrap 4  -->
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/vendor/bootstrap/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/bootstrap.min.js}"></script>
+    <!--  Font Awesome 5   -->
+    <script th:src="@{/vendor/fa5/fa5.js}"></script>
+</div>
+
+<div th:fragment="adminpage-script">
+    <script th:src="@{/js/adminpage.js}"></script>
+</div>
+
+</html>

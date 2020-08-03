@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="sidebar" class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" id="mySidebar"
+     style="width:200px;background-color: #D6D6D6">
+    <button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
+    <div class="container-fluid py-2" style="background-color: white;">
+        <img th:src="@{/img/logofmipaui.png}" alt="Logo FMIPA UI"
+             class="img-fluid">
+    </div>
+
+    <div class="container dropdown my-0">
+        <div  class="btn px-0 d-flex" data-toggle="dropdown">
+            <article class="ml-auto">
+                Hi, admin! <i class="fas fa-caret-down"></i>
+            </article>
+        </div>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+    <a th:href="@{/admin/post}" class="w3-bar-item w3-button" style="background-color: #C4C4C4;">
+        <div class="row">
+            <div class="col-3 py-2">
+                <img th:src="@{/img/iconpost.png}" alt="post" class="img-fluid">
+            </div>
+            <div class="col-8 justify-content-center align-self-center pl-0">
+                <h6 class="m-0">Post</h6>
+            </div>
+        </div>
+    </a>
+    <a th:href="@{/admin/groupmember}" class="w3-bar-item w3-button" style="background-color: #C4C4C4;">
+        <div class="row">
+            <div class="col-3 py-2">
+                <img th:src="@{/img/icongroup.png}" alt="group" class="img-fluid">
+            </div>
+            <div class="col-8 justify-content-center align-self-center pl-0">
+                <h6 class="m-0">Group Member</h6>
+            </div>
+        </div>
+    </a>
+    <a th:href="@{/admin/account}" class="w3-bar-item w3-button" style="background-color: #C4C4C4;">
+        <div class="row">
+            <div class="col-3 py-2">
+                <img th:src="@{/img/iconaccount.png}" alt="account" class="img-fluid">
+            </div>
+            <div class="col-8 justify-content-center align-self-center pl-0">
+                <h6 class="m-0">Account</h6>
+            </div>
+        </div>
+    </a>
+    <br>
+    <a th:href="@{/logout}" class="w3-bar-item w3-button" style="background-color: #C4C4C4;">
+        <div class="row">
+            <div class="col-3 py-2">
+                <img th:src="@{/img/iconsignout.png}" alt="logout" class="img-fluid">
+            </div>
+            <div class="col-8 justify-content-center align-self-center pl-0">
+                <h6 class="m-0">Logout</h6>
+            </div>
+        </div>
+    </a>
+</div>
+
+</html>
