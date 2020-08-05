@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin/account")
 public class AdminAccountController {
@@ -22,7 +24,9 @@ public class AdminAccountController {
     private RoleService roleService;
 
     @GetMapping("")
-    public String manageAccount() {
+    public String manageAccount(Model model) {
+        List<UserModel> userList = userService.getAllUser();
+        model.addAttribute("userList", userList);
         return "account-manage";
     }
 
