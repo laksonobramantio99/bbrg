@@ -20,10 +20,10 @@
 
     <div class="w3-container py-3">
         <!-- ISI KONTEN -->
-        <h3>Add Account</h3>
-        <br>
         <div class="col-sm-4">
-            <form th:action="@{/admin/account/add}" method="post" th:object="${userModel}">
+            <h3>Add Account</h3>
+            <br>
+            <form method="post" th:object="${userModel}" id="addUserForm">
                 <div class="form-group">
                     <label>Username</label>
                     <input type="text" class="form-control" id="username" placeholder="Username" name="username">
@@ -34,18 +34,159 @@
                 </div>
                 <div class="form-group">
                     <label>Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password" name="confirm-password">
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" name="confirmPassword">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 80px">Submit</button>
+                <p class="font-weight-bold mb-2" id="output-error" style="color: red"></p>
+                <button type="button" class="btn btn-primary" style="width: 80px" id="btnSubmit">Submit</button>
                 <button type="button" class="btn btn-secondary" style="width: 80px">Back</button>
             </form>
         </div>
+
+        <!-- The Modal: Loader -->
+        <div th:replace="fragments/fragment :: loaderModal" th:remove="tag"></div>
+        <!-- END: The Modal -->
+
+        <!-- The Modal: Success Modal -->
+        <div class="modal fade" id="successModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center py-4">
+                        <i class="fa fa-check-circle fa-3x mb-2" aria-hidden="true" style="color: #34ce57"></i>
+                        <h6 class="">New Account has been added!</h6>
+                        <br>
+                        <a role="button" class="btn btn-primary" th:href="@{/admin/account}">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: The Modal -->
     </div>
 
 </div>
 
 <!-- Script -->
 <div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
+<script type="text/javascript">
+    function validateForm() {
+        var isValid = true;
+        $('.form-control').each(function() {
+            if ( $(this).val() === '' ) {
+                isValid = false;
+            }
+        });
+        return isValid;
+    }
+
+    function validateUsername() {
+        var username = $("#username").val();
+        var regex = /^[a-zA-Z0-9]+$/;
+        var result = regex.test(username);
+        return result
+    }
+
+    function checkMinLengthPassword() {
+        var password = $("#password").val();
+        var confirmPassword = $("#confirmPassword").val();
+        if (password.length >= 8 && confirmPassword.length >= 8) {
+            return true;
+        }
+        return false;
+    }
+
+    function checkPasswordMatch() {
+        var password = $("#password").val();
+        var confirmPassword = $("#confirmPassword").val();
+        if (password !== confirmPassword) {
+            return false;
+        }
+        return true;
+    }
+
+    function checkUsernameIsAvailable() {
+        var isAvailable = false;
+        $.ajax({
+            type: 'GET',
+            url: '/api/account/isAvailable/' + $('#username').val(),
+            async: false,
+            dataType: 'json',
+            processData: false,
+            cache: false,
+            success: function (data) {
+                isAvailable = data.isAvailable;
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+            }
+        });
+        return isAvailable;
+    }
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function (event) {
+            $("#loaderModal").modal("show");
+
+            if (!(validateForm())) {
+                $("#output-error").text("Harap lengkapi semua field");
+                $("#loaderModal").modal("hide");
+                return;
+            }
+            if (!(validateUsername())) {
+                $("#output-error").text("Username hanya dapat diisi huruf dan angka");
+                $("#loaderModal").modal("hide");
+                return;
+            }
+            if (checkUsernameIsAvailable()) {
+                $("#output-error").text("Username yang diisi telah digunakan");
+                $("#loaderModal").modal("hide");
+                return;
+            }
+            if (!(checkMinLengthPassword())) {
+                $("#output-error").text("Password yang diisi minimal 8 karakter");
+                $("#loaderModal").modal("hide");
+                return;
+            }
+            if (!(checkPasswordMatch())) {
+                $("#output-error").text("Password dan konfirmasi password yang diisi tidak sesuai/match");
+                $("#loaderModal").modal("hide");
+                return;
+            }
+
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+
+            // Get form
+            var form = $('#addUserForm')[0];
+
+            // Create an FormData object
+            var data = new FormData(form);
+
+            // disabled the submit button
+            $("#btnSubmit").prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                url: "/api/account/add",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    $("#output-error").text("");
+                    $("#loaderModal").modal("hide");
+                    $("#btnSubmit").prop("disabled", false);
+                    $("#successModal").modal("show")
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                    $("#btnSubmit").prop("disabled", false);
+                }
+            });
+        });
+    });
+
+</script>
 
 </body>
 </html>

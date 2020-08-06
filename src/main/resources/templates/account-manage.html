@@ -29,7 +29,7 @@
 
 
         <div class="table-responsive col-md-8 px-0">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="accountTable">
                 <thead class="thead-light">
                 <tr>
                     <th>No</th>
@@ -65,6 +65,9 @@
 
 <!-- Script -->
 <div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
+<script type="text/javascript">
+    $('#accountTable').DataTable();
+</script>
 
 </body>
 </html>

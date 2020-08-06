@@ -4,4 +4,5 @@ import brg.bbrg.model.RoleModel;
 
 public interface RoleService {
     RoleModel getById(Integer id);
+    RoleModel getByName(String name);
 }

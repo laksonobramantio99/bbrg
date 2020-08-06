@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/iconmakara.ico}">
+    <!--  My CSS  -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <!--  W3 CSS  -->
     <link rel="stylesheet" th:href="@{/vendor/w3/w3.css}">
     <!--  Bootstrap 4  -->
@@ -18,6 +20,15 @@
 
 <div th:fragment="adminpage-script">
     <script th:src="@{/js/adminpage.js}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
 </div>
+
+<!-- The Modal: Loader -->
+<div th:fragment="loaderModal" class="modal" id="loaderModal" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered d-flex justify-content-center text-center">
+        <div class="loader"></div>
+    </div>
+</div>
+<!-- END: The Modal -->
 
 </html>

@@ -22,5 +22,12 @@ public class RoleServiceImpl implements RoleService {
             return null;
     }
 
-
+    @Override
+    public RoleModel getByName(String name) {
+        Optional<RoleModel> roleModel = roleDB.findByName(name);
+        if (roleModel.isPresent())
+            return roleModel.get();
+        else
+            return null;
+    }
 }
