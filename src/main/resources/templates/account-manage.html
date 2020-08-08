@@ -24,41 +24,42 @@
         <p>This page is used to manage accounts that can log into the system</p>
 
         <a th:href="@{/admin/account/add}">
-            <button class="btn btn-primary my-3">Add account</button>
+            <button class="btn btn-primary my-3">+ Add account</button>
         </a>
 
-
         <div class="table-responsive col-md-8 px-0">
-            <table class="table table-bordered" id="accountTable">
-                <thead class="thead-light">
-                <tr>
-                    <th>No</th>
-                    <th>Username</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="user, iterStat : ${userList}">
-                    <td th:text="${iterStat.count}"></td>
-                    <td th:text="${user.username}"></td>
-                    <td>
-                        <a th:href="@{'/admin/account/editUsername/' + ${user.id}}">
-                            <button class="btn btn-primary btn-sm mb-1">
-                                Change Username
+            <div class="card p-2">
+                <table class="table table-bordered" id="accountTable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>No</th>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user, iterStat : ${userList}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td>
+                            <a th:href="@{/admin/account/changeUsername(id=${user.id})}">
+                                <button class="btn btn-primary btn-sm mb-1">
+                                    Change Username
+                                </button>
+                            </a>
+                            <a th:href="@{/admin/account/changePassword(id=${user.id})}">
+                                <button class="btn btn-primary btn-sm mb-1">
+                                    Change Password
+                                </button>
+                            </a>
+                            <button class="btn btn-danger btn-sm mb-1">
+                                Delete
                             </button>
-                        </a>
-                        <a th:href="@{'/admin/account/editPassword/' + ${user.id}}">
-                            <button class="btn btn-primary btn-sm mb-1">
-                                Change Password
-                            </button>
-                        </a>
-                        <button class="btn btn-danger btn-sm mb-1">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

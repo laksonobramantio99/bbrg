@@ -5,7 +5,7 @@
     <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
 
     <!------  Title Page  ------>
-    <title>Add Account</title>
+    <title>Change Username</title>
 </head>
 
 <body>
@@ -21,26 +21,21 @@
     <div class="w3-container py-3">
         <!-- ISI KONTEN -->
         <div class="col-sm-4">
-            <h3>Add Account</h3>
+            <h3>Change Username Account</h3>
             <br>
-            <form method="post" th:object="${userModel}" id="addUserForm">
+            <form id="myForm" th:object="${userModel}">
                 <div class="form-group">
+                    <input type="hidden" name="id" th:field="${userModel.id}">
                     <label>Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+                    <input type="text" class="form-control" id="username" placeholder="Username"
+                           name="username" th:field="${userModel.username}">
+                    <br>
+                    <p class="font-weight-bold mb-2" id="output-error" style="color: red"></p>
+                    <button type="button" class="btn btn-primary" style="width: 80px" id="btnSubmit">Submit</button>
+                    <a th:href="@{/admin/account}">
+                        <button type="button" class="btn btn-secondary" style="width: 80px">Back</button>
+                    </a>
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" name="confirmPassword">
-                </div>
-                <p class="font-weight-bold mb-2" id="output-error" style="color: red"></p>
-                <button type="button" class="btn btn-primary" style="width: 80px" id="btnSubmit">Submit</button>
-                <a th:href="@{/admin/account}">
-                    <button type="button" class="btn btn-secondary" style="width: 80px">Back</button>
-                </a>
             </form>
         </div>
 
@@ -55,7 +50,7 @@
                     <!-- Modal body -->
                     <div class="modal-body text-center py-4">
                         <i class="fa fa-check-circle fa-3x mb-2" aria-hidden="true" style="color: #34ce57"></i>
-                        <h6 class="">New Account has been added!</h6>
+                        <h6 class="">Username has been changed!</h6>
                         <br>
                         <a role="button" class="btn btn-primary" th:href="@{/admin/account}">Back</a>
                     </div>
@@ -70,6 +65,8 @@
 <!-- Script -->
 <div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
 <script type="text/javascript">
+    const currentUsername = $('#username').val();
+
     function validateForm() {
         var isValid = true;
         $('.form-control').each(function() {
@@ -87,25 +84,11 @@
         return result
     }
 
-    function checkMinLengthPassword() {
-        var password = $("#password").val();
-        var confirmPassword = $("#confirmPassword").val();
-        if (password.length >= 8 && confirmPassword.length >= 8) {
-            return true;
-        }
-        return false;
-    }
-
-    function checkPasswordMatch() {
-        var password = $("#password").val();
-        var confirmPassword = $("#confirmPassword").val();
-        if (password !== confirmPassword) {
+    function checkUsernameIsAvailable() {
+        if ($('#username').val() === currentUsername) {
             return false;
         }
-        return true;
-    }
 
-    function checkUsernameIsAvailable() {
         var isAvailable = false;
         $.ajax({
             type: 'GET',
@@ -130,36 +113,27 @@
             $("#loaderModal").modal("show");
 
             if (!(validateForm())) {
-                $("#output-error").text("Harap lengkapi semua field");
+                $("#output-error").text("Harap lengkapi semua field.");
                 $("#loaderModal").modal("hide");
                 return;
             }
             if (!(validateUsername())) {
-                $("#output-error").text("Username hanya dapat diisi huruf dan angka");
+                $("#output-error").text("Username hanya dapat diisi huruf dan angka.");
                 $("#loaderModal").modal("hide");
                 return;
             }
             if (checkUsernameIsAvailable()) {
-                $("#output-error").text("Username yang diisi telah digunakan");
+                $("#output-error").text("Username yang diisi telah digunakan.");
                 $("#loaderModal").modal("hide");
                 return;
             }
-            if (!(checkMinLengthPassword())) {
-                $("#output-error").text("Password yang diisi minimal 8 karakter");
-                $("#loaderModal").modal("hide");
-                return;
-            }
-            if (!(checkPasswordMatch())) {
-                $("#output-error").text("Password dan konfirmasi password yang diisi tidak sesuai/match");
-                $("#loaderModal").modal("hide");
-                return;
-            }
+
 
             //stop submit the form, we will post it manually.
             event.preventDefault();
 
             // Get form
-            var form = $('#addUserForm')[0];
+            var form = $('#myForm')[0];
 
             // Create an FormData object
             var data = new FormData(form);
@@ -169,15 +143,16 @@
 
             $.ajax({
                 type: "POST",
-                url: "/api/account/add",
+                // enctype: 'multipart/form-data',
+                url: "/api/account/changeUsername",
                 data: data,
                 processData: false,
                 contentType: false,
                 cache: false,
                 success: function (data) {
                     $("#output-error").text("");
-                    $("#loaderModal").modal("hide");
                     $("#btnSubmit").prop("disabled", false);
+                    $("#loaderModal").modal("hide");
                     $("#successModal").modal("show")
                 },
                 error: function (e) {
@@ -187,7 +162,6 @@
             });
         });
     });
-
 </script>
 
 </body>

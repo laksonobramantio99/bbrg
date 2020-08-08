@@ -45,4 +45,15 @@ public class AdminAccountRestController {
         response.put("status", "success");
         return response;
     }
+
+    @PostMapping("/changeUsername")
+    public Map<String, Object> changeUsernameSubmit(@ModelAttribute UserModel userModel) {
+        UserModel currentUserModel = userService.getById(userModel.getId());
+        currentUserModel.setUsername(userModel.getUsername());
+        userService.changeUsername(currentUserModel);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return response;
+    }
 }

@@ -42,5 +42,17 @@ public class UserServiceImpl implements UserService {
             return null;
     }
 
+    @Override
+    public UserModel getById(Long id) {
+        Optional<UserModel> userModel = userDB.findById(id);
+        if (userModel.isPresent())
+            return userModel.get();
+        else
+            return null;
+    }
 
+    @Override
+    public UserModel changeUsername(UserModel newUserModel) {
+        return userDB.save(newUserModel);
+    }
 }

@@ -6,10 +6,7 @@ import brg.bbrg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,10 +34,10 @@ public class AdminAccountController {
         return "account-addform";
     }
 
-    @PostMapping(value = "/add")
-    public String addUserSubmit(@ModelAttribute UserModel userModel) {
-        userModel.setRole(roleService.getById(1));
-        userService.addUser(userModel);
-        return "redirect:/";
+    @GetMapping(value = "/changeUsername")
+    public String changeUsername(@RequestParam Long id, Model model) {
+        UserModel userModel = userService.getById(id);
+        model.addAttribute("userModel", userModel);
+        return "account-change-username";
     }
 }
