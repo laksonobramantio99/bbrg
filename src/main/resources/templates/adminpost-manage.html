@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head Items (page setting, css, js, vendor)-->
+    <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
+
+    <!------  Title Page  ------>
+    <title>Post Management</title>
+</head>
+
+<body>
+<!--Sidebar-->
+<object th:replace="fragments/sidebar :: sidebar" th:remove="tag"></object>
+<!--End of Sidebar-->
+
+<div class="w3-main" style="margin-left:200px">
+    <!-- Navbar/Topbar -->
+    <nav th:replace="fragments/navbar :: navbar-top" th:remove="tag"></nav>
+    <!-- End of Navbar/Topbar -->
+
+    <div class="w3-container py-3">
+        <!-- ISI KONTEN -->
+        <h3>Post Management</h3>
+        <p>This page is used to manage post</p>
+
+        <a th:href="@{/admin/post/add}">
+            <button class="btn btn-primary my-3">+ Create New Post</button>
+        </a>
+        <br>
+        <div class="table-responsive px-0">
+            <table class="table table-bordered" id="myTable">
+                <thead class="thead-light">
+                <tr>
+                    <th>Date Posted</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Author</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post, iterStat : ${postModelList}">
+                    <td th:text="${post.datePosted}"></td>
+                    <td th:text="${post.title}"></td>
+                    <td th:if="${post.draft}">In draft</td>
+                    <td th:unless="${post.draft}">Posted</td>
+                    <td th:text="${post.user.username}"></td>
+                    <td>
+                        <a >
+                            <button class="btn btn-primary btn-sm mb-1" style="width: 60px;">
+                                Edit
+                            </button>
+                        </a>
+                        <a >
+                            <button class="btn btn-danger btn-sm mb-1" style="width: 60px;">
+                                Delete
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- Script -->
+<div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    });
+</script>
+</body>
+</html>

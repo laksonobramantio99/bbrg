@@ -26,40 +26,38 @@
         <a th:href="@{/admin/account/add}">
             <button class="btn btn-primary my-3">+ Add account</button>
         </a>
-
+        <br>
         <div class="table-responsive col-md-8 px-0">
-            <div class="card p-2">
-                <table class="table table-bordered" id="myTable">
-                    <thead class="thead-light">
-                    <tr>
-                        <th>No</th>
-                        <th>Username</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="user, iterStat : ${userList}">
-                        <td th:text="${iterStat.count}"></td>
-                        <td th:text="${user.username}"></td>
-                        <td>
-                            <a th:href="@{/admin/account/changeUsername(id=${user.id})}">
-                                <button class="btn btn-primary btn-sm mb-1">
-                                    Change Username
-                                </button>
-                            </a>
-                            <a th:href="@{/admin/account/changePassword(id=${user.id})}">
-                                <button class="btn btn-primary btn-sm mb-1">
-                                    Change Password
-                                </button>
-                            </a>
-                            <button class="btn btn-danger btn-sm mb-1 delete" th:value="${user.id}">
-                                Delete
+            <table class="table table-bordered" id="myTable">
+                <thead class="thead-light">
+                <tr>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user, iterStat : ${userList}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td>
+                        <a th:href="@{/admin/account/changeUsername(id=${user.id})}">
+                            <button class="btn btn-primary btn-sm mb-1">
+                                Change Username
                             </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </a>
+                        <a th:href="@{/admin/account/changePassword(id=${user.id})}">
+                            <button class="btn btn-primary btn-sm mb-1">
+                                Change Password
+                            </button>
+                        </a>
+                        <button class="btn btn-danger btn-sm mb-1 delete" th:value="${user.id}">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
         <!-- The Modal: Loader -->
