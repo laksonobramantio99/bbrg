@@ -21,7 +21,7 @@ public class AdminAccountRestController {
     private UserService userService;
 
     @GetMapping(value = "/isAvailable/{username}")
-    private Map<String, Object> isAvailable(@PathVariable String username){
+    public Map<String, Object> isAvailable(@PathVariable String username){
         UserModel user = userService.getByUsername(username);
         boolean isAvailable = false;
         if (user != null)
@@ -30,6 +30,17 @@ public class AdminAccountRestController {
         Map<String, Object> response = new HashMap<>();
         response.put("username", username);
         response.put("isAvailable", isAvailable);
+
+        return response;
+    }
+
+    @GetMapping(value = "/validatePassword")
+    public Map<String, Object> validatePassword(@RequestParam Long id, @RequestParam String pw) {
+        UserModel user = userService.getById(id);
+        boolean matches = userService.validatePassword(pw, user.getPassword());
+
+        HashMap<String, Object> response =  new HashMap<>();
+        response.put("isMatches", matches);
 
         return response;
     }
@@ -51,6 +62,17 @@ public class AdminAccountRestController {
         UserModel currentUserModel = userService.getById(userModel.getId());
         currentUserModel.setUsername(userModel.getUsername());
         userService.changeUsername(currentUserModel);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return response;
+    }
+
+    @PostMapping("/changePassword")
+    public Map<String, Object> changePasswordSubmit(@ModelAttribute UserModel userModel) {
+        UserModel currentUserModel = userService.getById(userModel.getId());
+        currentUserModel.setPassword(userModel.getPassword());
+        userService.addUser(currentUserModel);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");

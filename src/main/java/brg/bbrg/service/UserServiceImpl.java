@@ -55,4 +55,14 @@ public class UserServiceImpl implements UserService {
     public UserModel changeUsername(UserModel newUserModel) {
         return userDB.save(newUserModel);
     }
+
+    @Override
+    public boolean validatePassword(String rawPassword, String encodedPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (passwordEncoder.matches(rawPassword, encodedPassword)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

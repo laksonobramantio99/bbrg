@@ -40,4 +40,11 @@ public class AdminAccountController {
         model.addAttribute("userModel", userModel);
         return "account-change-username";
     }
+
+    @GetMapping(value = "/changePassword")
+    public String changePassword(@RequestParam Long id, Model model) {
+        UserModel userModel = userService.getById(id);
+        model.addAttribute("userModel", userModel);
+        return "account-change-password";
+    }
 }
