@@ -5,6 +5,8 @@ import brg.bbrg.model.UserModel;
 import brg.bbrg.service.RoleService;
 import brg.bbrg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -45,6 +47,15 @@ public class AdminAccountRestController {
         return response;
     }
 
+    @GetMapping(value = "/getUserLoggedIn")
+    public Map<String, Object> getUserLoggedIn() {
+        UserModel currentUser =  userService.getCurrentUser();
+
+        HashMap<String, Object> response =  new HashMap<>();
+        response.put("idUser", currentUser.getId());
+        return response;
+    }
+
     @PostMapping("/add")
     public Map<String, Object> addAccountSubmit(@ModelAttribute UserModel userModel) {
         RoleModel roleAdmin = roleService.getByName("Admin");
@@ -73,6 +84,16 @@ public class AdminAccountRestController {
         UserModel currentUserModel = userService.getById(userModel.getId());
         currentUserModel.setPassword(userModel.getPassword());
         userService.addUser(currentUserModel);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return response;
+    }
+
+    @PostMapping("/deleteUser/{id}")
+    public Map<String, Object> deleteUser(@PathVariable Long id) {
+        UserModel userModel = userService.getById(id);
+        userService.deleteUser(userModel);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");

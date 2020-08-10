@@ -4,6 +4,9 @@ import brg.bbrg.model.RoleModel;
 import brg.bbrg.model.UserModel;
 import brg.bbrg.repository.UserDB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +67,20 @@ public class UserServiceImpl implements UserService {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public void deleteUser(UserModel userModel) {
+        userDB.delete(userModel);
+    }
+
+    @Override
+    public UserModel getCurrentUser() {
+        String currentUsername = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            currentUsername = authentication.getName();
+        }
+        return getByUsername(currentUsername);
     }
 }

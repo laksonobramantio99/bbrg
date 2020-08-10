@@ -12,4 +12,6 @@ public interface UserService {
     UserModel getById(Long id);
     UserModel changeUsername(UserModel newUserModel);
     boolean validatePassword(String rawPassword, String encodedPassword);
+    void deleteUser(UserModel userModel);
+    UserModel getCurrentUser();
 }

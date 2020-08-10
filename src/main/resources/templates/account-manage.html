@@ -29,7 +29,7 @@
 
         <div class="table-responsive col-md-8 px-0">
             <div class="card p-2">
-                <table class="table table-bordered" id="accountTable">
+                <table class="table table-bordered" id="myTable">
                     <thead class="thead-light">
                     <tr>
                         <th>No</th>
@@ -52,7 +52,7 @@
                                     Change Password
                                 </button>
                             </a>
-                            <button class="btn btn-danger btn-sm mb-1">
+                            <button class="btn btn-danger btn-sm mb-1 delete" th:value="${user.id}">
                                 Delete
                             </button>
                         </td>
@@ -61,13 +61,122 @@
                 </table>
             </div>
         </div>
+
+        <!-- The Modal: Loader -->
+        <div th:replace="fragments/fragment :: loaderModal" th:remove="tag"></div>
+        <!-- END: The Modal -->
+
+        <!-- The Modal: Success Delete Modal -->
+        <div class="modal fade" id="confirmDeleteModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center py-4">
+                        <i class="fas fa-exclamation-circle fa-3x mb-2" aria-hidden="true" style="color: red"></i>
+                        <h6 class="">Are you sure want to delete this account?</h6>
+                        <br>
+                        <button role="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px">Cancel</button>
+                        <button role="button" class="btn btn-primary" style="width: 100px;" id="btnDeleteSubmit">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: The Modal -->
+
+        <!-- The Modal: Success Delete Modal -->
+        <div class="modal fade" id="successDeleteModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center py-4">
+                        <i class="fa fa-check-circle fa-3x mb-2" aria-hidden="true" style="color: #34ce57"></i>
+                        <h6 class="">Account has been deleted!</h6>
+                        <br>
+                        <a role="button" class="btn btn-primary" th:href="@{/admin/account}">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: The Modal -->
+
+        <!-- The Modal: Cant Delete Modal -->
+        <div class="modal fade" id="cantDeleteModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center py-4">
+                        <i class="fas fa-exclamation-circle fa-3x mb-2" aria-hidden="true" style="color: red"></i>
+                        <h6 class="">Cannot delete, you are currently logged in!</h6>
+                        <br>
+                        <button role="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: The Modal -->
     </div>
 </div>
 
 <!-- Script -->
 <div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
 <script type="text/javascript">
-    $('#accountTable').DataTable();
+
+    function getIdUserLoggedIn() {
+        var idUserLoggedIn = 0;
+        $.ajax({
+            type: "GET",
+            url: "/api/account/getUserLoggedIn",
+            async: false,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                idUserLoggedIn = data.idUser;
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+            }
+        });
+        return idUserLoggedIn;
+    }
+
+    $(document).ready( function () {
+        var idUserSelected = 0;
+
+        $('#myTable').DataTable();
+
+        $('#myTable tbody').on('click', '.delete', function (event) {
+            idUserSelected = $(this).attr('value');
+            if (idUserSelected == getIdUserLoggedIn()) {
+                $("#cantDeleteModal").modal("show");
+                return;
+            }
+            $("#confirmDeleteModal").modal("show");
+        });
+
+        // POST Delete
+        $("#btnDeleteSubmit").click(function (event) {
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+            $(this).prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                url: "/api/account/deleteUser/" + idUserSelected,
+                async: false,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    $("#confirmDeleteModal").modal("hide");
+                    $("#successDeleteModal").modal("show");
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                }
+            });
+        });
+    });
 </script>
 
 </body>
