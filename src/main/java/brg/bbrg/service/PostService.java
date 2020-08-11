@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PostService {
     List<PostModel> getAllPost();
+    PostModel createNewPost(PostModel postModel);
 }

@@ -40,7 +40,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="post, iterStat : ${postModelList}">
-                    <td th:text="${post.datePosted}"></td>
+                    <td th:text="${#temporals.format(post.datePosted, 'yyyy-MM-dd HH:mm')}"></td>
                     <td th:text="${post.title}"></td>
                     <td th:if="${post.draft}">In draft</td>
                     <td th:unless="${post.draft}">Posted</td>

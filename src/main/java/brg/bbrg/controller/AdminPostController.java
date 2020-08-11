@@ -24,4 +24,12 @@ public class AdminPostController {
 
         return "adminpost-manage";
     }
+
+    @GetMapping("/add")
+    public String addPost(Model model) {
+        PostModel postModel = new PostModel();
+        model.addAttribute("postModel", postModel);
+
+        return "adminpost-addpost";
+    }
 }

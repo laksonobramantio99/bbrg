@@ -17,4 +17,9 @@ public class PostServiceImpl implements PostService {
     public List<PostModel> getAllPost() {
         return postDB.findAll();
     }
+
+    @Override
+    public PostModel createNewPost(PostModel postModel) {
+        return postDB.save(postModel);
+    }
 }

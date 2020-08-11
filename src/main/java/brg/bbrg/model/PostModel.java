@@ -23,7 +23,7 @@ public class PostModel implements Serializable {
 
     @Lob
     @Column(name = "content", nullable = false)
-    private String description;
+    private String content;
 
     @Column(name = "isDraft", nullable = false)
     private Boolean isDraft;
@@ -60,12 +60,12 @@ public class PostModel implements Serializable {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getContent() {
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Boolean getDraft() {

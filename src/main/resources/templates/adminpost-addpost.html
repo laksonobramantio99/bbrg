@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head Items (page setting, css, js, vendor)-->
+    <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
+    <!--  CKEditor  -->
+    <script th:src="@{/vendor/ckeditor/ckeditor.js}"></script>
+    <!------  Title Page  ------>
+    <title>Create New Post</title>
+</head>
+
+<body>
+<!--Sidebar-->
+<object th:replace="fragments/sidebar :: sidebar" th:remove="tag"></object>
+<!--End of Sidebar-->
+
+<div class="w3-main" style="margin-left:200px">
+    <!-- Navbar/Topbar -->
+    <nav th:replace="fragments/navbar :: navbar-top" th:remove="tag"></nav>
+    <!-- End of Navbar/Topbar -->
+
+    <div class="w3-container py-3">
+        <!-- ISI KONTEN -->
+        <div class="">
+            <h3>Create New Post</h3>
+            <br>
+            <form method="post" th:object="${postModel}" id="myForm">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" id="titl e" placeholder="Title" name="title" style="width: 20em" th:value="${postModel.title}">
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea class="form-control-plaintext" name="content" id="content" rows="30" th:value="${postModel.content}"></textarea>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="isDraft" id="isDraft"> Save as Draft
+                    </label>
+                </div>
+
+                <p class="font-weight-bold mb-2" id="output-error" style="color: red"></p>
+                <button type="button" class="btn btn-primary" style="width: 80px" id="btnSubmit">Post</button>
+                <a href="/admin/post">
+                    <button type="button" class="btn btn-secondary" style="width: 80px">Back</button>
+                </a>
+            </form>
+        </div>
+
+        <!-- The Modal: Loader -->
+        <div th:replace="fragments/fragment :: loaderModal" th:remove="tag"></div>
+        <!-- END: The Modal -->
+
+        <!-- The Modal: Success Modal -->
+        <div class="modal fade" id="successModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center py-4">
+                        <i class="fa fa-check-circle fa-3x mb-2" aria-hidden="true" style="color: #34ce57"></i>
+                        <h6 class="">Posted!</h6>
+                        <br>
+                        <a role="button" class="btn btn-primary" th:href="@{/admin/post}">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: The Modal -->
+    </div>
+
+</div>
+
+<!-- Script -->
+<div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
+<script type="text/javascript">
+    CKEDITOR.replace('content');
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+
+        $("#btnSubmit").click(function (event) {
+            $("#loaderModal").modal("show");
+
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+
+            // Get form
+            var form = $('#myForm')[0];
+            var content = CKEDITOR.instances.content.getData();
+
+            // Create an FormData object
+            var data = new FormData(form);
+            data.append("content", content);
+            console.log(data);
+
+            var url = "";
+            if ($("#isDraft").is(":checked")) {
+                url = "/api/post/createPostAsDraft";
+            } else {
+                url = "/api/post/createPost";
+            }
+
+            // disabled the submit button
+            $("#btnSubmit").prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    $("#output-error").text("");
+                    $("#loaderModal").modal("hide");
+                    $("#btnSubmit").prop("disabled", false);
+                    $("#successModal").modal("show")
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                    $("#btnSubmit").prop("disabled", false);
+                }
+            });
+        });
+    });
+
+
+</script>
+
+</body>
+</html>
