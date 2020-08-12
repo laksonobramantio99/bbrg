@@ -8,4 +8,5 @@ public interface PostService {
     List<PostModel> getAllPostOrderByDatePostedDesc();
     PostModel createNewPost(PostModel postModel);
     PostModel getById(Long id);
+    void deletePost(PostModel postModel);
 }

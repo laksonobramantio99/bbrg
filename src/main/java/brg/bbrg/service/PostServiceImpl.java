@@ -32,4 +32,9 @@ public class PostServiceImpl implements PostService {
         else
             return null;
     }
+
+    @Override
+    public void deletePost(PostModel postModel) {
+        postDB.delete(postModel);
+    }
 }

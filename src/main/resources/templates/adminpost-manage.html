@@ -51,16 +51,47 @@
                                 Edit
                             </button>
                         </a>
-                        <a >
-                            <button class="btn btn-danger btn-sm mb-1" style="width: 60px;">
-                                Delete
-                            </button>
-                        </a>
+                        <button class="btn btn-danger btn-sm mb-1 delete" style="width: 60px;" th:value="${post.id}">
+                            Delete
+                        </button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
+        <!-- The Modal: Confirm Delete Modal -->
+        <div class="modal fade" id="confirmDeleteModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center py-4">
+                        <i class="fas fa-exclamation-circle fa-3x mb-2" aria-hidden="true" style="color: red"></i>
+                        <h6 class="">Are you sure want to delete this post?</h6>
+                        <br>
+                        <button role="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px">Cancel</button>
+                        <button role="button" class="btn btn-primary" style="width: 100px;" id="btnDeleteSubmit">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: The Modal -->
+
+        <!-- The Modal: Success Delete Modal -->
+        <div class="modal fade" id="successDeleteModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center py-4">
+                        <i class="fa fa-check-circle fa-3x mb-2" aria-hidden="true" style="color: #34ce57"></i>
+                        <h6 class="">Post has been deleted!</h6>
+                        <br>
+                        <a role="button" class="btn btn-primary" th:href="@{/admin/post}">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: The Modal -->
     </div>
 
 </div>
@@ -70,6 +101,34 @@
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();
+
+        $('#myTable tbody').on('click', '.delete', function (event) {
+            idPostSelected = $(this).attr('value');
+            $("#confirmDeleteModal").modal("show");
+        });
+
+        // POST Delete
+        $("#btnDeleteSubmit").click(function (event) {
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+            $(this).prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                url: "/api/post/delete/" + idPostSelected,
+                async: false,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    $("#confirmDeleteModal").modal("hide");
+                    $("#successDeleteModal").modal("show");
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                }
+            });
+        });
     });
 </script>
 </body>

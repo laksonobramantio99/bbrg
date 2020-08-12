@@ -1,13 +1,11 @@
 package brg.bbrg.restcontroller;
 
 import brg.bbrg.model.PostModel;
+import brg.bbrg.model.UserModel;
 import brg.bbrg.service.PostService;
 import brg.bbrg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -65,6 +63,16 @@ public class AdminPostRestController {
         LocalDateTime now = LocalDateTime.now();
         postModel.setDateLastEdit(now);
         postModel.setDraft(true);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return response;
+    }
+
+    @PostMapping("/delete/{id}")
+    public Map<String, Object> deleteUser(@PathVariable Long id) {
+        PostModel postModel = postService.getById(id);
+        postService.deletePost(postModel);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
