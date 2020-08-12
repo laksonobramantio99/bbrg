@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head Items (page setting, css, js, vendor)-->
+    <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
+
+    <!------  Title Page  ------>
+    <title>Group Member Management</title>
+</head>
+
+<body>
+<!--Sidebar-->
+<object th:replace="fragments/sidebar :: sidebar" th:remove="tag"></object>
+<!--End of Sidebar-->
+
+<div class="w3-main" style="margin-left:200px">
+    <!-- Navbar/Topbar -->
+    <nav th:replace="fragments/navbar :: navbar-top" th:remove="tag"></nav>
+    <!-- End of Navbar/Topbar -->
+
+    <div class="w3-container py-3">
+        <!-- ISI KONTEN -->
+        <h3>Group Member Management</h3>
+        <p>This page is used to manage group member</p>
+    </div>
+
+</div>
+
+<!-- Script -->
+<div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
+
+</body>
+</html>
