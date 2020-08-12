@@ -20,7 +20,10 @@
 
 <div th:fragment="adminpage-script">
     <script th:src="@{/js/adminpage.js}"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+    <!--  DataTable  -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 </div>
 
 <!-- The Modal: Loader -->
@@ -30,5 +33,63 @@
     </div>
 </div>
 <!-- END: The Modal -->
+
+<!-- CKEditor -->
+<div th:fragment="ckeditor">
+    <script th:src="@{/vendor/ckeditor5/build/ckeditor.js}"></script>
+    <script>
+        let ckeditor;
+        ClassicEditor
+            .create( document.querySelector( '.editor' ), {
+                toolbar: {
+                    items: [
+                        'undo',
+                        'redo',
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'indent',
+                        'outdent',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'mediaEmbed'
+                    ]
+                },
+                language: 'en',
+                image: {
+                    toolbar: [
+                        'imageTextAlternative',
+                        'imageStyle:full',
+                        'imageStyle:side'
+                    ]
+                },
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells'
+                    ]
+                },
+                licenseKey: '',
+            } )
+            .then( editor => {
+                ckeditor = editor;
+            } )
+            .catch( error => {
+                console.error( 'Oops, something went wrong!' );
+                console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+                console.warn( 'Build id: st6mj1o333pf-51boqrm8c4f0' );
+                console.error( error );
+            } );
+    </script>
+</div>
+<!-- END: CKEditor -->
 
 </html>

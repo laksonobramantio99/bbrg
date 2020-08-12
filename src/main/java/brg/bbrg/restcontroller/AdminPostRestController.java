@@ -48,4 +48,26 @@ public class AdminPostRestController {
         response.put("status", "success");
         return response;
     }
+
+    @PostMapping("/editPost")
+    public Map<String, Object> editPost(@ModelAttribute PostModel postModel) {
+        LocalDateTime now = LocalDateTime.now();
+        postModel.setDateLastEdit(now);
+        postModel.setDraft(false);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return response;
+    }
+
+    @PostMapping("/editPostAsDraft")
+    public Map<String, Object> editPostAsDraft(@ModelAttribute PostModel postModel) {
+        LocalDateTime now = LocalDateTime.now();
+        postModel.setDateLastEdit(now);
+        postModel.setDraft(true);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return response;
+    }
 }

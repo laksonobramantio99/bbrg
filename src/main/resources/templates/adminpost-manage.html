@@ -27,7 +27,7 @@
             <button class="btn btn-primary my-3">+ Create New Post</button>
         </a>
         <br>
-        <div class="table-responsive px-0">
+        <div class="table-responsive py-2 pr-1 pl-0">
             <table class="table table-bordered" id="myTable">
                 <thead class="thead-light">
                 <tr>
@@ -46,7 +46,7 @@
                     <td th:unless="${post.draft}">Posted</td>
                     <td th:text="${post.user.username}"></td>
                     <td>
-                        <a >
+                        <a th:href="@{/admin/post/edit(id=${post.id})}">
                             <button class="btn btn-primary btn-sm mb-1" style="width: 60px;">
                                 Edit
                             </button>

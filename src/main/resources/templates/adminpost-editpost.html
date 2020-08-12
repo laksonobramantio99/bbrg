@@ -3,9 +3,8 @@
 <head>
     <!-- Head Items (page setting, css, js, vendor)-->
     <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
-
     <!------  Title Page  ------>
-    <title>Create New Post</title>
+    <title>Edit Post</title>
 </head>
 
 <body>
@@ -21,16 +20,17 @@
     <div class="w3-container py-3">
         <!-- ISI KONTEN -->
         <div class="">
-            <h3>Create New Post</h3>
+            <h3>Edit Post</h3>
             <br>
             <form method="post" th:object="${postModel}" id="myForm">
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control" id="title" placeholder="Title" name="title" style="width: 20em" th:field="${postModel.title}">
+                    <input type="text" class="form-control" id="titl e" placeholder="Title" name="title" style="width: 20em" th:field="${postModel.title}">
                 </div>
                 <div class="form-group">
                     <label>Content</label>
                     <textarea class="form-control editor" id="content"></textarea>
+                    <input type="hidden" id="isiContent" th:value="${postModel.content}">
                 </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
@@ -57,7 +57,7 @@
                     <!-- Modal body -->
                     <div class="modal-body text-center py-4">
                         <i class="fa fa-check-circle fa-3x mb-2" aria-hidden="true" style="color: #34ce57"></i>
-                        <h6 class="">Posted!</h6>
+                        <h6 class="">Post has been edited!</h6>
                         <br>
                         <a role="button" class="btn btn-primary" th:href="@{/admin/post}">Back</a>
                     </div>
@@ -73,12 +73,11 @@
 <div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
 <!--  CKEditor  -->
 <object th:replace="fragments/fragment :: ckeditor" th:remove="tag"></object>
-
 <script type="text/javascript">
-    let editor;
+
     function validateForm() {
         var isValid = true;
-        $('#title').each(function() {
+        $('.form-control').each(function() {
             if ( $(this).val() === '' ) {
                 isValid = false;
             }
@@ -88,6 +87,8 @@
 
     $(document).ready( function () {
         $('#myTable').DataTable();
+        console.log('isinya ',$('#isiContent').val());
+        ckeditor.setData($('#isiContent').val());
 
         $("#btnSubmit").click(function (event) {
             $("#loaderModal").modal("show");
@@ -103,16 +104,17 @@
 
             // Get form
             var form = $('#myForm')[0];
+            var content = CKEDITOR.instances.content.getData();
 
             // Create an FormData object
             var data = new FormData(form);
-            data.append('content', ckeditor.getData());
+            data.append("content", content);
 
             var url = "";
             if ($("#isDraft").is(":checked")) {
-                url = "/api/post/createPostAsDraft";
+                url = "/api/post/editPostAsDraft";
             } else {
-                url = "/api/post/createPost";
+                url = "/api/post/editPost";
             }
 
             // disabled the submit button

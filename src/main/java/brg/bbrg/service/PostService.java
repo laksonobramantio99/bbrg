@@ -5,6 +5,7 @@ import brg.bbrg.model.PostModel;
 import java.util.List;
 
 public interface PostService {
-    List<PostModel> getAllPost();
+    List<PostModel> getAllPostOrderByDatePostedDesc();
     PostModel createNewPost(PostModel postModel);
+    PostModel getById(Long id);
 }

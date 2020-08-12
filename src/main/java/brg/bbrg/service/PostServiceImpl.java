@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -14,12 +15,21 @@ public class PostServiceImpl implements PostService {
     private PostDB postDB;
 
     @Override
-    public List<PostModel> getAllPost() {
-        return postDB.findAll();
+    public List<PostModel> getAllPostOrderByDatePostedDesc() {
+        return postDB.findAllByOrderByDatePostedDesc();
     }
 
     @Override
     public PostModel createNewPost(PostModel postModel) {
         return postDB.save(postModel);
+    }
+
+    @Override
+    public PostModel getById(Long id) {
+        Optional<PostModel> postModel = postDB.findById(id);
+        if (postModel.isPresent())
+            return postModel.get();
+        else
+            return null;
     }
 }

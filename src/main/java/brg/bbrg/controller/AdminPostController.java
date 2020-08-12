@@ -1,12 +1,14 @@
 package brg.bbrg.controller;
 
 import brg.bbrg.model.PostModel;
+import brg.bbrg.model.UserModel;
 import brg.bbrg.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class AdminPostController {
 
     @GetMapping("")
     public String manageAccount(Model model) {
-        List<PostModel> postModelList = postService.getAllPost();
+        List<PostModel> postModelList = postService.getAllPostOrderByDatePostedDesc();
         model.addAttribute("postModelList", postModelList);
 
         return "adminpost-manage";
@@ -31,5 +33,13 @@ public class AdminPostController {
         model.addAttribute("postModel", postModel);
 
         return "adminpost-addpost";
+    }
+
+    @GetMapping("/edit")
+    public String editPost(@RequestParam Long id,  Model model) {
+        PostModel postModel = postService.getById(id);
+        model.addAttribute("postModel", postModel);
+
+        return "adminpost-editpost";
     }
 }
