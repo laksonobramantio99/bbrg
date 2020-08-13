@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head Items (page setting, css, js, vendor)-->
+    <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
+
+    <!-- Font: Lato & Open Sans -->
+    <div th:replace="fragments/fragment-web :: font-lato-opensans" th:remove="tag"></div>
+
+    <!--  CKEditor Styles  -->
+    <div th:replace="fragments/fragment-web :: ckeditor-styles" th:remove="tag"></div>
+
+    <!------  Title Page  ------>
+    <title th:text="'Post: ' + ${post.title}"></title>
+</head>
+<body style="font-family: 'Open Sans', sans-serif;">
+
+<!-- Navbar top -->
+<nav th:replace="fragments/fragment-web :: navbar-top" th:remove="tag"></nav>
+
+<img th:src="@{/img/header-besar.png}" alt="header" class="mt-3 mb-5" style="width: 100%">
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <h3 th:text="${post.title}"></h3>
+            <p th:text="'On '+ ${#temporals.format(post.datePosted, 'MMM dd, yyy - HH:mm')}"></p>
+
+            <div class="ck-content" th:utext="${post.content}"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/fragment-web :: footer" th:remove="tag"></div>
+
+</body>
+</html>
