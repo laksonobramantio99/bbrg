@@ -3,6 +3,9 @@ package brg.bbrg.service;
 import brg.bbrg.model.PostModel;
 import brg.bbrg.repository.PostDB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,5 +39,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public void deletePost(PostModel postModel) {
         postDB.delete(postModel);
+    }
+
+    @Override
+    public Page<PostModel> getWithPagination10(int pageIndex) {
+        Page<PostModel> page = postDB.findAll(
+                PageRequest.of(pageIndex, 10, Sort.by(Sort.Direction.DESC, "datePosted")));
+        return page;
     }
 }
