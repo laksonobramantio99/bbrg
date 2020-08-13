@@ -24,14 +24,14 @@
             <br>
             <div class="col-sm-8 px-0">
                 <form method="post" th:object="${postModel}" id="myForm">
+                    <input type="hidden" th:value="${postModel.id}" name="id">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" id="titl e" placeholder="Title" name="title" style="width: 20em" th:field="${postModel.title}">
+                        <input type="text" class="form-control" id="title" placeholder="Title" name="title" style="width: 20em" th:field="${postModel.title}">
                     </div>
                     <div class="form-group">
                         <label>Content</label>
                         <textarea class="form-control editor" id="content"></textarea>
-                        <input type="hidden" id="isiContent" th:value="${postModel.content}">
                     </div>
                     <div class="form-group form-check">
                         <label class="form-check-label">
@@ -45,6 +45,7 @@
                         <button type="button" class="btn btn-secondary" style="width: 80px">Back</button>
                     </a>
                 </form>
+                <input type="hidden" id="isiContent" th:value="${postModel.content}">
             </div>
         </div>
 
@@ -75,11 +76,12 @@
 <div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
 <!--  CKEditor  -->
 <object th:replace="fragments/fragment :: ckeditor" th:remove="tag"></object>
+
 <script type="text/javascript">
 
     function validateForm() {
         var isValid = true;
-        $('.form-control').each(function() {
+        $('#title').each(function() {
             if ( $(this).val() === '' ) {
                 isValid = false;
             }
@@ -106,11 +108,11 @@
 
             // Get form
             var form = $('#myForm')[0];
-            var content = CKEDITOR.instances.content.getData();
 
             // Create an FormData object
             var data = new FormData(form);
-            data.append("content", content);
+            console.log('isi pas dikliki ', ckeditor.getData());
+            data.append('content', ckeditor.getData());
 
             var url = "";
             if ($("#isDraft").is(":checked")) {

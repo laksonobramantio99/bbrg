@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PostService {
     List<PostModel> getAllPostOrderByDatePostedDesc();
-    PostModel createNewPost(PostModel postModel);
+    PostModel savePost(PostModel postModel);
     PostModel getById(Long id);
     void deletePost(PostModel postModel);
     Page<PostModel> getWithPagination10(int pageIndex);

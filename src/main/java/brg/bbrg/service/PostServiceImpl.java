@@ -23,7 +23,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostModel createNewPost(PostModel postModel) {
+    public PostModel savePost(PostModel postModel) {
         return postDB.save(postModel);
     }
 

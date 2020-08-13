@@ -27,7 +27,7 @@ public class AdminPostRestController {
         postModel.setDatePosted(now);
         postModel.setDraft(false);
         postModel.setUser(userService.getCurrentUser());
-        postService.createNewPost(postModel);
+        postService.savePost(postModel);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
@@ -40,7 +40,7 @@ public class AdminPostRestController {
         postModel.setDatePosted(now);
         postModel.setDraft(true);
         postModel.setUser(userService.getCurrentUser());
-        postService.createNewPost(postModel);
+        postService.savePost(postModel);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
@@ -49,9 +49,14 @@ public class AdminPostRestController {
 
     @PostMapping("/editPost")
     public Map<String, Object> editPost(@ModelAttribute PostModel postModel) {
+        PostModel postEdited = postService.getById(postModel.getId());
+        postEdited.setTitle(postModel.getTitle());
+        postEdited.setContent(postModel.getContent());
+
         LocalDateTime now = LocalDateTime.now();
-        postModel.setDateLastEdit(now);
-        postModel.setDraft(false);
+        postEdited.setDateLastEdit(now);
+        postEdited.setDraft(false);
+        postService.savePost(postEdited);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
@@ -60,9 +65,14 @@ public class AdminPostRestController {
 
     @PostMapping("/editPostAsDraft")
     public Map<String, Object> editPostAsDraft(@ModelAttribute PostModel postModel) {
+        PostModel postEdited = postService.getById(postModel.getId());
+        postEdited.setTitle(postModel.getTitle());
+        postEdited.setContent(postModel.getContent());
+
         LocalDateTime now = LocalDateTime.now();
-        postModel.setDateLastEdit(now);
-        postModel.setDraft(true);
+        postEdited.setDateLastEdit(now);
+        postEdited.setDraft(true);
+        postService.savePost(postEdited);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
