@@ -11,7 +11,7 @@
     <div th:replace="fragments/fragment-web :: ckeditor-styles" th:remove="tag"></div>
 
     <!------  Title Page  ------>
-    <title th:text="'Post: ' + ${post.title}"></title>
+    <title>Template</title>
 </head>
 <body style="font-family: 'Open Sans', sans-serif;">
 
@@ -20,15 +20,8 @@
 <img th:src="@{/img/header-kecil.png}" alt="header" class="mb-4" style="width: 100%">
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <h3 th:text="${post.title}"></h3>
-            <p th:text="'On '+ ${#temporals.format(post.datePosted, 'MMM dd, yyy - HH:mm')}"></p>
-            <br>
-            <div class="ck-content" th:utext="${post.content}"></div>
-        </div>
-    </div>
+    <!--  ISI KONTEN  -->
+    <!--  ISI KONTEN  -->
 </div>
 
 <!-- Footer -->
