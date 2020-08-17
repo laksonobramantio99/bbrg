@@ -11,4 +11,5 @@ public interface PostService {
     PostModel getById(Long id);
     void deletePost(PostModel postModel);
     Page<PostModel> getWithPagination10(int pageIndex);
+    List<PostModel> searchPost(String keyword);
 }

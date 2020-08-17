@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface PostDB extends JpaRepository<PostModel, Long> {
     List<PostModel> findAllByOrderByDatePostedDesc();
     Optional<PostModel> findById(Long id);
+    List<PostModel> findAllByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseOrderByDatePostedDesc(String keyword1, String keyword2);
 }

@@ -9,7 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -39,5 +41,17 @@ public class PageController {
             return "redirect:/admin";
         }
         return "login";
+    }
+
+    @GetMapping("/post-page")
+    public String postPage(@RequestParam Integer p, Model model) {
+        Page<PostModel> postModelList = postService.getWithPagination10(p);
+        boolean isLast = postModelList.isLast();
+
+        model.addAttribute("postModelList", postModelList);
+        model.addAttribute("isLast", isLast);
+        model.addAttribute("indexNow", p);
+
+        return "post-page";
     }
 }

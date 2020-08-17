@@ -55,7 +55,7 @@
 
             <!-- Reply -->
             <h3 class="mt-5 mb-3">Reply</h3>
-            <h6 th:if="${replyModelList.isEmpty()}">There is no reply to this post</h6>
+            <h6 th:if="${replyModelList.isEmpty()}">There is no reply for this post</h6>
             <div th:each="reply: ${replyModelList}" class="card p-3 mb-2" style="border-width: 2px; border-radius: 10px">
                 <p class="font-weight-bold m-0" th:text="${reply.name}"></p>
                 <p th:text="${reply.email} + ' | ' + ${#temporals.format(reply.datePosted, 'MMM dd, yyy - HH:mm')}"></p>

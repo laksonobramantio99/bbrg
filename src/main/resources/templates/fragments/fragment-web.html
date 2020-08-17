@@ -21,8 +21,8 @@
                         About
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item font-weight-bold" th:href="@{/profile}">Profile</a>
-                        <a class="dropdown-item font-weight-bold" th:href="@{/topic-of-interest}">Topic of Interest</a>
+                        <a class="dropdown-item" th:href="@{/profile}">Profile</a>
+                        <a class="dropdown-item" th:href="@{/topic-of-interest}">Topic of Interest</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -39,13 +39,13 @@
 
 
 <!-- Footer -->
-<div th:fragment="footer" id="footer" class="container-fluid mt-5 py-4" style="background-color: #222222">
+<footer th:fragment="footer" id="footer" class="container-fluid mt-5 py-4" style="background-color: #222222">
     <div class="container" style="color: white">
         <p class="mb-0">Bioinformatics Research Group</p>
         <p class="mb-0">Faculty of Mathematics and Natural Science</p>
         <p class="mb-0">Universitas Indonesia</p>
     </div>
-</div>
+</footer>
 
 <!-- Font: Lato & Open Sans -->
 <link th:fragment="font-lato-opensans" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">

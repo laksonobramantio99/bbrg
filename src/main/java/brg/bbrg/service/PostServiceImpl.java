@@ -47,4 +47,10 @@ public class PostServiceImpl implements PostService {
                 PageRequest.of(pageIndex, 10, Sort.by(Sort.Direction.DESC, "datePosted")));
         return page;
     }
+
+    @Override
+    public List<PostModel> searchPost(String keyword) {
+        List<PostModel> postModelsearched = postDB.findAllByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseOrderByDatePostedDesc(keyword, keyword);
+        return postModelsearched;
+    }
 }

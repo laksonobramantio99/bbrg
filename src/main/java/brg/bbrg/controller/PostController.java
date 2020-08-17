@@ -33,4 +33,13 @@ public class PostController {
 
         return "post-detail";
     }
+
+    @GetMapping("/search")
+    public String postSearch(@RequestParam String keyword, Model model) {
+        List<PostModel> postModelSearched = postService.searchPost(keyword);
+        model.addAttribute("postModelSearched", postModelSearched);
+        model.addAttribute("keyword", keyword);
+
+        return "post-search";
+    }
 }
