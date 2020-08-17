@@ -18,3 +18,14 @@
     100% { transform: rotate(360deg); }
 }
 
+@media (max-width: 575px) {
+    .search-pc {
+        display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    .search-mobile {
+        display: none;
+    }
+}

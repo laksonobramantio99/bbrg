@@ -18,17 +18,29 @@
 <!-- Navbar top -->
 <nav th:replace="fragments/fragment-web :: navbar-top" th:remove="tag"></nav>
 
-<img th:src="@{/img/header-besar2.png}" alt="header" class="mb-5" style="width: 100%">
+<img th:src="@{/img/header-besar2.png}" alt="header" class="mb-4" style="width: 100%">
 
 <div class="container">
     <div class="row">
+
+        <div class="col-sm-4 search-mobile mb-5">
+            <h3>Search a Post</h3>
+            <form th:action="@{/post/search}" method="get">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Keyword" id="" name="keyword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+
+
         <div class="col-sm-7">
             <div th:each="post : ${postModelList}" class="mb-5">
                 <a th:href="@{/post(id=${post.id})}">
                     <h3 th:text="${post.title}" style="color: black"></h3>
                 </a>
                 <p th:text="'On '+ ${#temporals.format(post.datePosted, 'MMM dd, yyy - HH:mm')}"></p>
-<!--                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>-->
+                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
 <!--                <div class="ck-content" th:utext="${post.content}"></div>-->
             </div>
             <a th:if="${!isLast}" th:href="@{/post-page(p=${indexNow}+1)}" class="text-center">
@@ -36,13 +48,13 @@
             </a>
         </div>
 
-        <div class="col-sm-1"></div>
+        <div class="col-sm-1 search-pc"></div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-4 search-pc">
             <h3>Search a Post</h3>
             <form th:action="@{/post/search}" method="get">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Keyword" id="keyword" name="keyword">
+                    <input type="text" class="form-control" placeholder="Keyword" id="" name="keyword" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
