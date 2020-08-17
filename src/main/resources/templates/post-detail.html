@@ -11,7 +11,7 @@
     <div th:replace="fragments/fragment-web :: ckeditor-styles" th:remove="tag"></div>
 
     <!------  Title Page  ------>
-    <title th:text="'Post: ' + ${post.title}"></title>
+    <title th:text="${post.title}"></title>
 </head>
 <body style="font-family: 'Open Sans', sans-serif;">
 
@@ -32,20 +32,22 @@
             <div class="card p-4 my-4" style="background-color: #e5e5e5; border-color: #e5e5e5; border-radius: 10px">
                 <div class="container">
                     <h4>Give a Reply</h4>
-                    <form action="">
+                    <form id="myForm">
+                        <input type="hidden" th:value="${post.id}" name="idpost">
                         <div class="form-group">
                             <label>Comment</label>
                             <textarea class="form-control" name="comment" id="comment"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control col-sm-5" placeholder="Name" id="name">
+                            <input type="text" class="form-control col-sm-5" placeholder="Name" id="name" name="name">
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" class="form-control col-sm-5" placeholder="Email" id="email">
+                            <input type="email" class="form-control col-sm-5" placeholder="Email" id="email" name="email">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <p class="mb-2" id="output-error" style="color: red"></p>
+                        <button type="button" class="btn btn-primary" id="btnSubmitReply">Submit</button>
                         <br>
                     </form>
                 </div>
@@ -53,17 +55,107 @@
 
             <!-- Reply -->
             <h3 class="mt-5 mb-3">Reply</h3>
-            <div class="card p-3 mb-3" style="border-width: 2px; border-radius: 10px">
-                <h6>Laksono Bramantio</h6>
-                <p>laksono@email.com | July 13, 2019 - 09.12</p>
-                <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <h6 th:if="${replyModelList.isEmpty()}">There is no reply to this post</h6>
+            <div th:each="reply: ${replyModelList}" class="card p-3 mb-2" style="border-width: 2px; border-radius: 10px">
+                <p class="font-weight-bold m-0" th:text="${reply.name}"></p>
+                <p th:text="${reply.email} + ' | ' + ${#temporals.format(reply.datePosted, 'MMM dd, yyy - HH:mm')}"></p>
+                <p class="m-0" th:text="${reply.comment}"></p>
             </div>
         </div>
     </div>
 </div>
 
+<!-- The Modal: Loader -->
+<div th:replace="fragments/fragment :: loaderModal" th:remove="tag"></div>
+<!-- END: The Modal -->
+
+<!-- The Modal: Success Modal -->
+<div class="modal fade" id="successModal" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body text-center py-4">
+                <i class="fa fa-check-circle fa-3x mb-2" aria-hidden="true" style="color: #34ce57"></i>
+                <h6 class="">Comment has been posted!</h6>
+                <br>
+                <a role="button" class="btn btn-primary" th:href="@{/post(id=${post.id})}">Okay</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: The Modal -->
+
 <!-- Footer -->
 <div th:replace="fragments/fragment-web :: footer" th:remove="tag"></div>
+
+<script type="text/javascript">
+
+    function validateForm() {
+        var isValid = true;
+        $('.form-control').each(function() {
+            if ( $(this).val() === '' ) {
+                isValid = false;
+            }
+        });
+        return isValid;
+    }
+
+    function validateEmail() {
+        var email = $('#email').val();
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    $(document).ready( function () {
+
+        $("#btnSubmitReply").click(function (event) {
+            $("#loaderModal").modal("show");
+
+            if (!(validateForm())) {
+                $("#output-error").text("Please fill in the fields provided");
+                $("#loaderModal").modal("hide");
+                return;
+            }
+            if (!(validateEmail())) {
+                $("#output-error").text("Please fill in the email fields with the correct email format");
+                $("#loaderModal").modal("hide");
+                return;
+            }
+
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+
+            // Get form
+            var form = $('#myForm')[0];
+
+            // Create an FormData object
+            var data = new FormData(form);
+
+            // disabled the submit button
+            $("#btnSubmit").prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                url: '/api/post/reply',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    $("#output-error").text("");
+                    $("#loaderModal").modal("hide");
+                    $("#btnSubmit").prop("disabled", false);
+                    $("#successModal").modal("show")
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                    $("#btnSubmit").prop("disabled", false);
+                }
+            });
+        });
+    });
+
+</script>
 
 </body>
 </html>

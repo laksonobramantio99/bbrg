@@ -18,4 +18,9 @@ public class ReplyServiceImpl implements ReplyService {
     public List<ReplyModel> getRelpyListByPost(PostModel postModel) {
         return replyDB.findAllByPost(postModel);
     }
+
+    @Override
+    public ReplyModel addReply(ReplyModel replyModel) {
+        return replyDB.save(replyModel);
+    }
 }

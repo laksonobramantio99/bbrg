@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ReplyService {
     List<ReplyModel> getRelpyListByPost(PostModel postModel);
+    ReplyModel addReply(ReplyModel replyModel);
 }
