@@ -5,6 +5,7 @@ import brg.bbrg.repository.PostDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,8 @@ public class PostServiceImpl implements PostService {
     private PostDB postDB;
 
     @Override
-    public List<PostModel> getAllPostOrderByDatePostedDesc() {
-        return postDB.findAllByOrderByDatePostedDesc();
+    public List<PostModel> getAllPost() {
+        return postDB.findAll();
     }
 
     @Override
@@ -43,14 +44,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Page<PostModel> getWithPagination10(int pageIndex) {
-        Page<PostModel> page = postDB.findAll(
-                PageRequest.of(pageIndex, 10, Sort.by(Sort.Direction.DESC, "datePosted")));
+        Pageable pageable = PageRequest.of(pageIndex, 10, Sort.by(Sort.Direction.DESC, "datePosted"));
+        Page<PostModel> page = postDB.findAllByIsDraft(false, pageable);
         return page;
     }
 
     @Override
     public List<PostModel> searchPost(String keyword) {
-        List<PostModel> postModelsearched = postDB.findAllByTitleContainingIgnoreCaseOrContentContainingIgnoreCaseOrderByDatePostedDesc(keyword, keyword);
+        List<PostModel> postModelsearched = postDB.findAllByTitleContainingIgnoreCaseAndIsDraftOrContentContainingIgnoreCaseAndIsDraftOrderByDatePostedDesc(keyword, false, keyword, false);
         return postModelsearched;
     }
 }

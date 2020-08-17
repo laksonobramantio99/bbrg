@@ -21,7 +21,7 @@ public class AdminPostController {
 
     @GetMapping("")
     public String manageAccount(Model model) {
-        List<PostModel> postModelList = postService.getAllPostOrderByDatePostedDesc();
+        List<PostModel> postModelList = postService.getAllPost();
         model.addAttribute("postModelList", postModelList);
 
         return "adminpost-manage";

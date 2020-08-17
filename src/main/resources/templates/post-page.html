@@ -28,7 +28,7 @@
                     <h3 th:text="${post.title}" style="color: black"></h3>
                 </a>
                 <p th:text="'On '+ ${#temporals.format(post.datePosted, 'MMM dd, yyy - HH:mm')}"></p>
-                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+<!--                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>-->
                 <!--                <div class="ck-content" th:utext="${post.content}"></div>-->
             </div>
             <a th:if="${!isLast}" th:href="@{/post-page(p=${indexNow}+1)}" class="text-center">
@@ -40,7 +40,7 @@
 
         <div class="col-sm-4">
             <h3>Search a Post</h3>
-            <form action="" method="">
+            <form th:action="@{/post/search}" method="get">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Keyword" id="keyword" name="keyword">
                 </div>
