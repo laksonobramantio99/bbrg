@@ -5,12 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin/groupmember")
-public class AdminGroupMemberController {
+@RequestMapping("")
+public class GroupMembersController {
 
-    @GetMapping("")
-    public String groupMemberManage() {
-        return "admingroupmember-manage";
+    @GetMapping("/group-members")
+    public String groupMember() {
+        return "group-members";
     }
-
 }
