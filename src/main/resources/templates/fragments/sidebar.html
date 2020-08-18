@@ -10,14 +10,14 @@
     </div>
 
     <div class="container dropdown my-0">
-        <div  class="btn px-0 d-flex" data-toggle="dropdown">
-            <article class="ml-auto">
-                Hi, admin! <i class="fas fa-caret-down"></i>
-            </article>
-        </div>
-        <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
+<!--        <div  class="btn px-0 d-flex" data-toggle="dropdown">-->
+<!--            <article class="ml-auto">-->
+<!--                Hi, admin! <i class="fas fa-caret-down"></i>-->
+<!--            </article>-->
+<!--        </div>-->
+<!--        <div class="dropdown-menu dropdown-menu-right">-->
+<!--            <a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>-->
+<!--        </div>-->
     </div>
     <a th:href="@{/admin/post}" class="w3-bar-item w3-button" style="background-color: #C4C4C4;">
         <div class="row">
@@ -29,13 +29,13 @@
             </div>
         </div>
     </a>
-    <a th:href="@{/admin/groupmember}" class="w3-bar-item w3-button" style="background-color: #C4C4C4;">
+    <a th:href="@{/admin/group-members}" class="w3-bar-item w3-button" style="background-color: #C4C4C4;">
         <div class="row">
             <div class="col-3 py-2">
                 <img th:src="@{/img/icongroup.png}" alt="group" class="img-fluid">
             </div>
             <div class="col-8 justify-content-center align-self-center pl-0">
-                <h6 class="m-0">Group Member</h6>
+                <h6 class="m-0">Group Members</h6>
             </div>
         </div>
     </a>

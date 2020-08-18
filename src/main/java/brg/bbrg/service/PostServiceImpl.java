@@ -2,6 +2,7 @@ package brg.bbrg.service;
 
 import brg.bbrg.model.PostModel;
 import brg.bbrg.repository.PostDB;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostModel savePost(PostModel postModel) {
+        String cleanedText = Jsoup.parse(postModel.getContent()).text();
+        String previewText = cleanedText.substring(0, Math.min(cleanedText.length(), 500)) + "...";
+        postModel.setPreviewContent(previewText);
         return postDB.save(postModel);
     }
 
