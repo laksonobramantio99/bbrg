@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head Items (page setting, css, js, vendor)-->
+    <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
+
+    <!-- Font: Lato & Open Sans -->
+    <div th:replace="fragments/fragment-web :: font-lato-opensans" th:remove="tag"></div>
+
+    <!--  CKEditor Styles  -->
+    <div th:replace="fragments/fragment-web :: ckeditor-styles" th:remove="tag"></div>
+
+    <!------  Title Page  ------>
+    <title>Group Members</title>
+</head>
+<body style="font-family: 'Open Sans', sans-serif;">
+
+<!-- Navbar top -->
+<nav th:replace="fragments/fragment-web :: navbar-top" th:remove="tag"></nav>
+<img th:src="@{/img/header-kecil.png}" alt="header" class="mb-4" style="width: 100%">
+
+<div class="container">
+    <!--  ISI KONTEN  -->
+    <h3>Group Members</h3>
+
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/fragment-web :: footer" th:remove="tag"></div>
+
+</body>
+</html>
