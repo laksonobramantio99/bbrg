@@ -18,15 +18,26 @@
     100% { transform: rotate(360deg); }
 }
 
+/*mobile*/
 @media (max-width: 575px) {
     .search-pc {
         display: none;
     }
+    #google-scholar-area {
+        text-align: left;
+    }
+    #google-scholar-h5 {
+        display: none;
+    }
 }
 
+/*PC*/
 @media (min-width: 576px) {
     .search-mobile {
         display: none;
+    }
+    #google-scholar-area {
+        text-align: right;
     }
 }
 
