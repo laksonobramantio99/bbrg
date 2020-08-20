@@ -21,7 +21,45 @@
 
 <div class="container content-web">
     <!--  ISI KONTEN  -->
-    <h3>Publications</h3>
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Publications</h3>
+            <h5>Some of our popular publications</h5>
+        </div>
+        <div class="col-sm-6" id="google-scholar-area">
+            <h5 id="google-scholar-h5">Our Google Scholar</h5>
+            <a href="https://scholar.google.co.id/citations?hl=en&user=3t3aHO4AAAAJ" target="_blank" rel="noopener noreferrer">
+                <button class="btn btn-sm btn-light p-2">
+                    <img th:src="@{/img/google_scholar_logo.png}" class="" alt="Google Scholar" style="width: 118px; height: 45.2px">
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <br>
+    <!-- Thanks to http://cse.bth.se/~fer/googlescholar-api/googlescholar.php for the api  -->
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Cited By</th>
+                <th>Year</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="publ : ${publicationList}">
+                <td>
+                    <p class="m-0" th:text="${publ.title}"></p>
+                    <p class="m-0" th:text="${publ.authors}" style="color: #777777"></p>
+                    <p class="m-0" th:text="${publ.venue}" style="color: #777777"></p>
+                </td>
+                <td th:text="${publ.citations}"></td>
+                <td th:text="${publ.year}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
