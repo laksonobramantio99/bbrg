@@ -1,6 +1,7 @@
 package brg.bbrg.restservice;
 
 import brg.bbrg.rest.PublicationsData;
+import brg.bbrg.setting.CustomUriBuilderFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,22 @@ public class PublicationsRestServiceImpl implements PublicationsRestService {
 
     @Override
     public PublicationsData getPublicationsData() {
-        Mono<PublicationsData> publicationsData = webClient.get()
-                .uri("http://cse.bth.se/~fer/googlescholar-api/googlescholar.php?user=3t3aHO4AAAAJ")
+        Mono<PublicationsData> publicationsData = WebClient.builder()
+                .uriBuilderFactory(
+                        new CustomUriBuilderFactory(
+                                "http://cse.bth.se/~fer/googlescholar-api/googlescholar.php?user=3t3aHO4AAAAJ%26sortby=pubdate"
+                        ))
+                .build()
+                .get()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToMono(PublicationsData.class);
+
+//        Mono<PublicationsData> publicationsData = webClient.get()
+//                .uri("http://cse.bth.se/~fer/googlescholar-api/googlescholar.php?user=3t3aHO4AAAAJ")
+//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+//                .retrieve()
+//                .bodyToMono(PublicationsData.class);
 
         return  publicationsData.block();
     }
