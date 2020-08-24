@@ -18,14 +18,40 @@
     100% { transform: rotate(360deg); }
 }
 
+/*mobile*/
 @media (max-width: 575px) {
     .search-pc {
         display: none;
     }
+    #google-scholar-area {
+        text-align: left;
+    }
+    #google-scholar-h5 {
+        display: none;
+    }
 }
 
+/*PC*/
 @media (min-width: 576px) {
     .search-mobile {
         display: none;
     }
+    #google-scholar-area {
+        text-align: right;
+    }
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content-web {
+    padding-bottom: 100px;
 }

@@ -26,6 +26,10 @@ public class PostModel implements Serializable {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Lob
+    @Column(name = "previewContent", nullable = false)
+    private String previewContent;
+
     @Column(name = "isDraft", nullable = false)
     private Boolean isDraft;
 
@@ -70,6 +74,22 @@ public class PostModel implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getPreviewContent() {
+        return previewContent;
+    }
+
+    public void setPreviewContent(String previewContent) {
+        this.previewContent = previewContent;
+    }
+
+    public List<ReplyModel> getListReply() {
+        return listReply;
+    }
+
+    public void setListReply(List<ReplyModel> listReply) {
+        this.listReply = listReply;
     }
 
     public Boolean getDraft() {
