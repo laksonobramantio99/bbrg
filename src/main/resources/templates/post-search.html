@@ -37,7 +37,7 @@
             <h4 th:text="'Search result for &quot;' + ${keyword} + '&quot;'"></h4>
             <br>
             <h5 th:if="${postModelSearched.isEmpty()}">Not found</h5>
-            <div th:each="post : ${postModelSearched}" class="mb-5">
+            <div th:each="post : ${postModelSearched}" class="mb-4">
                 <a th:href="@{/post(id=${post.id})}">
                     <h3 th:text="${post.title}" style="color: black"></h3>
                 </a>
