@@ -39,7 +39,7 @@
                 <a th:href="@{/post(id=${post.id})}">
                     <h3 th:text="${post.title}" style="color: black"></h3>
                 </a>
-                <p th:text="'On '+ ${#temporals.format(post.datePosted, 'MMM dd, yyy - HH:mm')}"></p>
+                <p th:text="'On '+ ${#temporals.format(post.datePosted, 'MMM dd, yyy')}"></p>
                 <p class="m-0" th:text="${post.previewContent}"></p>
                 <a th:href="@{/post(id=${post.id})}">Read more</a>
             </div>
