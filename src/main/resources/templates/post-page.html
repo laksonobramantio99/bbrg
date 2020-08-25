@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-sm-7">
-            <div th:each="post : ${postModelList}" class="mb-5">
+            <div th:each="post : ${postModelList}" class="mb-4">
                 <a th:href="@{/post(id=${post.id})}">
                     <h3 th:text="${post.title}" style="color: black"></h3>
                 </a>
