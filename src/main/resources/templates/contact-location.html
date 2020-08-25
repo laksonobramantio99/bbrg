@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head Items (page setting, css, js, vendor)-->
+    <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
+
+    <!-- Font: Lato & Open Sans -->
+    <div th:replace="fragments/fragment-web :: font-lato-opensans" th:remove="tag"></div>
+
+    <!--  CKEditor Styles  -->
+    <div th:replace="fragments/fragment-web :: ckeditor-styles" th:remove="tag"></div>
+
+    <!------  Title Page  ------>
+    <title>Contact & Location</title>
+</head>
+<body style="font-family: 'Open Sans', sans-serif;">
+
+<!-- Navbar top -->
+<nav th:replace="fragments/fragment-web :: navbar-top" th:remove="tag"></nav>
+<img th:src="@{/img/header-kecil.png}" alt="header" class="mb-4" style="width: 100%">
+
+<div class="container content-web">
+    <!--  ISI KONTEN  -->
+    <h3>Contact & Location</h3>
+    <br>
+    <div class="row">
+        <div class="col-sm-5">
+            <h5>Contact</h5>
+            <p><i class='fas fa-phone-square-alt fa-lg'></i> (021) 7270027</p>
+            <br>
+
+            <h5>Location</h5>
+            <p>
+                Bioinformatics and Biomedical Science Laboratory <br>
+                Department of Chemistry <br>
+                Faculty of Mathematics and Natural Sciences <br>
+                Universitas Indonesia
+            </p>
+            <p>
+                Kampus Universitas Indonesia Depok <br>
+                Jl. Lingkar Kampus Raya, Pondok Cina, Kecamatan Beji, <br>
+                Kota Depok, Jawa Barat 16424
+            </p>
+        </div>
+        <div class="col-sm-7 text-right">
+            <div class="map-responsive">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7930.373131399349!2d106.82265103488768!3d-6.369897299999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ec1858963be9%3A0x8cb18fe31b7e3d61!2sDepartemen%20Kimia%20FMIPA%20UI!5e0!3m2!1sid!2sid!4v1598289604159!5m2!1sid!2sid" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/fragment-web :: footer" th:remove="tag"></div>
+
+</body>
+</html>

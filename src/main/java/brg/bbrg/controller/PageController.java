@@ -54,4 +54,9 @@ public class PageController {
 
         return "post-page";
     }
+
+    @GetMapping("/contact-location")
+    public String contactLocation() {
+        return "contact-location";
+    }
 }
