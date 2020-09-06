@@ -1,6 +1,8 @@
 package brg.bbrg.controller;
 
 import brg.bbrg.model.PostModel;
+import brg.bbrg.rest.PublicationsData;
+import brg.bbrg.restservice.PublicationsRestService;
 import brg.bbrg.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,13 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 public class PageController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private PublicationsRestService publicationsRestService;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -53,6 +56,29 @@ public class PageController {
         model.addAttribute("indexNow", p);
 
         return "post-page";
+    }
+
+    @GetMapping("/lab-profile")
+    public String profile() {
+        return "about-lab-profile";
+    }
+
+    @GetMapping("/research-topics")
+    public String topicOfInterest() {
+        return "about-research-topics";
+    }
+
+    @GetMapping("/publications")
+    public String publications(Model model) {
+        PublicationsData publicationsData =  publicationsRestService.getPublicationsData();
+        model.addAttribute("publicationList", publicationsData.getPublicationList());
+
+        return "publications";
+    }
+
+    @GetMapping("/group-members")
+    public String groupMembers() {
+        return "group-members";
     }
 
     @GetMapping("/contact-location")

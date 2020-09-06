@@ -12,4 +12,9 @@ public class AdminController {
     public String adminHome() {
         return "admin-home";
     }
+
+    @GetMapping(value = "/static-page")
+    public String staticPage() {
+        return "static-page-manage";
+    }
 }
