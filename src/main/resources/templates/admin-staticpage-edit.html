@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head Items (page setting, css, js, vendor)-->
+    <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
+    <!------  Title Page  ------>
+    <title>Edit Page</title>
+</head>
+
+<body>
+<!--Sidebar-->
+<object th:replace="fragments/sidebar :: sidebar" th:remove="tag"></object>
+<!--End of Sidebar-->
+
+<div class="w3-main" style="margin-left:200px">
+    <!-- Navbar/Topbar -->
+    <nav th:replace="fragments/navbar :: navbar-top" th:remove="tag"></nav>
+    <!-- End of Navbar/Topbar -->
+
+    <div class="w3-container py-3">
+        <!-- ISI KONTEN -->
+        <div class="">
+            <h3>Edit Page</h3>
+            <br>
+            <div class="col-sm-8 px-0">
+                <form method="post" th:object="${staticPageModel}" id="myForm">
+                    <input type="hidden" th:value="${staticPageModel.id}" name="id">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="Title" name="title" style="width: 20em" th:field="${staticPageModel.title}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea class="form-control editor" id="content"></textarea>
+                    </div>
+
+                    <p class="font-weight-bold mb-2" id="output-error" style="color: red"></p>
+                    <button type="button" class="btn btn-primary" style="width: 80px" id="btnSubmit">Save</button>
+                    <a href="/admin/static-page">
+                        <button type="button" class="btn btn-secondary" style="width: 80px">Back</button>
+                    </a>
+                </form>
+                <input type="hidden" id="isiContent" th:value="${staticPageModel.content}">
+            </div>
+        </div>
+
+        <!-- The Modal: Loader -->
+        <div th:replace="fragments/fragment :: loaderModal" th:remove="tag"></div>
+        <!-- END: The Modal -->
+
+        <!-- The Modal: Success Modal -->
+        <div class="modal fade" id="successModal" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center py-4">
+                        <i class="fa fa-check-circle fa-3x mb-2" aria-hidden="true" style="color: #34ce57"></i>
+                        <h6 class="">Page content has been edited!</h6>
+                        <br>
+                        <a role="button" class="btn btn-primary" th:href="@{/admin/static-page}">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: The Modal -->
+    </div>
+
+</div>
+
+<!-- Script -->
+<div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
+<!--  CKEditor  -->
+<object th:replace="fragments/fragment :: ckeditor" th:remove="tag"></object>
+
+<script type="text/javascript">
+
+    function validateForm() {
+        var isValid = true;
+        $('#title').each(function() {
+            if ( $(this).val() === '' ) {
+                isValid = false;
+            }
+        });
+        return isValid;
+    }
+
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+        console.log('isinya ',$('#isiContent').val());
+        ckeditor.setData($('#isiContent').val());
+
+        $("#btnSubmit").click(function (event) {
+            $("#loaderModal").modal("show");
+
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+
+            // Get form
+            var form = $('#myForm')[0];
+
+            // Create an FormData object
+            var data = new FormData(form);
+            console.log('isi pas dikliki ', ckeditor.getData());
+            data.append('content', ckeditor.getData());
+
+            // disabled the submit button
+            $("#btnSubmit").prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                url: "/api/static-page/edit",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    $("#output-error").text("");
+                    $("#loaderModal").modal("hide");
+                    $("#btnSubmit").prop("disabled", false);
+                    $("#successModal").modal("show")
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                    $("#btnSubmit").prop("disabled", false);
+                }
+            });
+        });
+    });
+
+</script>
+
+</body>
+</html>
