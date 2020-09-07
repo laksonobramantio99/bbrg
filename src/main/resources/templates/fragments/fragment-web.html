@@ -5,8 +5,8 @@
 <div th:fragment="navbar-top">
     <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top px-2" style="background-color: white!important; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
         <!-- Brand/logo -->
-        <a class="navbar-brand py-0" href="https://www.sci.ui.ac.id/">
-            <img th:src="@{/img/logofmipaui.png}" alt="logo-fmipaui" style="width: 90px">
+        <a class="navbar-brand py-0 pl-2">
+            <img th:src="@{/img/logo-bbrg.png}" alt="logo-bbrg" style="width: 35px">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -16,20 +16,20 @@
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" th:href="@{/}">Home</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbardrop" data-toggle="dropdown">
-                        About
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" th:href="@{/profile}">Profile</a>
-                        <a class="dropdown-item" th:href="@{/topic-of-interest}">Topic of Interest</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" th:href="@{/lab-profile}">Lab Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" th:href="@{/research-topics}">Research Topics</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" th:href="@{/publications}">Publications</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" th:href="@{/group-members}">Group Members</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" th:href="@{/contact-location}">Contact & Location</a>
                 </li>
             </ul>
         </div>

@@ -18,15 +18,26 @@
     100% { transform: rotate(360deg); }
 }
 
+/*mobile*/
 @media (max-width: 575px) {
     .search-pc {
         display: none;
     }
+    #google-scholar-area {
+        text-align: left;
+    }
+    #google-scholar-h5 {
+        display: none;
+    }
 }
 
+/*PC*/
 @media (min-width: 576px) {
     .search-mobile {
         display: none;
+    }
+    #google-scholar-area {
+        text-align: right;
     }
 }
 
@@ -43,4 +54,27 @@ body {
 
 .content-web {
     padding-bottom: 100px;
+}
+
+.map-responsive{
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+}
+.map-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato', sans-serif !important;
+    font-weight: bold !important;
 }

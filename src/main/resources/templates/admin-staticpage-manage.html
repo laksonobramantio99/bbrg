@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head Items (page setting, css, js, vendor)-->
+    <div th:include="fragments/fragment :: head-items" th:remove="tag"></div>
+
+    <!------  Title Page  ------>
+    <title>Static Page Management</title>
+</head>
+
+<body>
+<!--Sidebar-->
+<object th:replace="fragments/sidebar :: sidebar" th:remove="tag"></object>
+<!--End of Sidebar-->
+
+<div class="w3-main" style="margin-left:200px">
+    <!-- Navbar/Topbar -->
+    <nav th:replace="fragments/navbar :: navbar-top" th:remove="tag"></nav>
+    <!-- End of Navbar/Topbar -->
+
+    <div class="w3-container py-3">
+        <!-- ISI KONTEN -->
+        <h3>Static Page Management</h3>
+        <p>This page is used to manage all of the static page.</p>
+
+        <br>
+        <div class="table-responsive col-md-8 py-2 pl-0">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Date Last Edit</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="page : ${staticPageModelList}">
+                        <td th:text="${page.title}"></td>
+                        <td th:text="${#temporals.format(page.dateLastEdit, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td>
+                            <a th:href="@{/admin/static-page/edit(id=${page.id})}">
+                                <button type="button" class="btn btn-primary">Edit</button>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Script -->
+<div th:include="fragments/fragment :: adminpage-script" th:remove="tag"></div>
+
+</body>
+</html>

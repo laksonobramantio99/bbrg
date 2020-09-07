@@ -34,12 +34,13 @@
         </div>
 
         <div class="col-sm-7">
-            <div th:each="post : ${postModelList}" class="mb-5">
+            <div th:each="post : ${postModelList}" class="mb-4">
                 <a th:href="@{/post(id=${post.id})}">
                     <h3 th:text="${post.title}" style="color: black"></h3>
                 </a>
-                <p th:text="'On '+ ${#temporals.format(post.datePosted, 'MMM dd, yyy - HH:mm')}"></p>
-                <p th:text="${post.previewContent}"></p>
+                <p th:text="'On '+ ${#temporals.format(post.datePosted, 'MMM dd, yyy')}"></p>
+                <p class="m-0" th:text="${post.previewContent}"></p>
+                <a th:href="@{/post(id=${post.id})}">Read more</a>
             </div>
             <a th:if="${!isLast}" th:href="@{/post-page(p=${indexNow}+1)}" class="text-center">
                 <h5>Older post</h5>
