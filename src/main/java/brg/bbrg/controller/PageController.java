@@ -1,9 +1,11 @@
 package brg.bbrg.controller;
 
 import brg.bbrg.model.PostModel;
+import brg.bbrg.model.StaticPageModel;
 import brg.bbrg.rest.PublicationsData;
 import brg.bbrg.restservice.PublicationsRestService;
 import brg.bbrg.service.PostService;
+import brg.bbrg.service.StaticPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -23,6 +25,9 @@ public class PageController {
 
     @Autowired
     private PublicationsRestService publicationsRestService;
+
+    @Autowired
+    private StaticPageService staticPageService;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -59,12 +64,16 @@ public class PageController {
     }
 
     @GetMapping("/lab-profile")
-    public String profile() {
+    public String profile(Model model) {
+        StaticPageModel staticPageModel = staticPageService.getById(1L);
+        model.addAttribute("staticPageModel", staticPageModel);
         return "about-lab-profile";
     }
 
     @GetMapping("/research-topics")
-    public String topicOfInterest() {
+    public String topicOfInterest(Model model) {
+        StaticPageModel staticPageModel = staticPageService.getById(2L);
+        model.addAttribute("staticPageModel", staticPageModel);
         return "about-research-topics";
     }
 
@@ -77,7 +86,9 @@ public class PageController {
     }
 
     @GetMapping("/group-members")
-    public String groupMembers() {
+    public String groupMembers(Model model) {
+        StaticPageModel staticPageModel = staticPageService.getById(3L);
+        model.addAttribute("staticPageModel", staticPageModel);
         return "group-members";
     }
 
