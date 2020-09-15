@@ -5,8 +5,15 @@
      style="width:200px;background-color: #D6D6D6">
     <button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
     <div class="container-fluid py-2" style="background-color: white;">
-        <img th:src="@{/img/logofmipaui.png}" alt="Logo FMIPA UI"
-             class="img-fluid">
+        <div class="row">
+            <div class="col-4">
+                <img th:src="@{/img/logo-bbrg.png}" alt="Logo FMIPA UI" class="img-fluid" style="height: 40px;">
+            </div>
+            <div class="col-8 d-flex pl-0">
+                <h6 class="m-0 justify-content-center align-self-center">Admin Page</h6>
+            </div>
+        </div>
+
     </div>
 
     <div class="container dropdown my-0">
